@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// provider ensures that correct database is used. Will not run if correct database url is not specified.
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+// prisma/schema.prisma
+model User {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  clerkUserId    String   @unique
+  email          String
+  fullName       String?
+  profileImageUrl String?
+  lastLoginAt    DateTime @default(now())
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  projects       Project[] // One-to-many relationship with Project
+}
+
+model Project {
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  userId         String
+  imageUrls      ImageUrls
+  parameters     Parameters
+  videoUrl       String?
+  status         ProjectStatus
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user           User     @relation(fields: [userId], references: [id])
+
+  @@index([userId], map: "userId_index")
+}
+
+type ImageUrls {
+  image1 String
+  image2 String
+}
+
+type Parameters {
+  transitionType String
+  duration       Int
+  otherSettings  Json?
+}
+
+type ProjectStatus {
+  state        String
+  errorMessage String?
+}
+
