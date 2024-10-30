@@ -1,6 +1,5 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ClerkGuard } from './clerk/clerk.guard';
 import { clerkMiddleware } from '@clerk/express';
 
 async function bootstrap() {

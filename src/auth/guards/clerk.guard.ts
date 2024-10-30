@@ -5,11 +5,11 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { Clerk } from './clerk';
+import { ClerkService } from '../services/clerk.service';
 
 @Injectable()
 export class ClerkGuard implements CanActivate {
-  constructor(private readonly clerk: Clerk) {}
+  constructor(private readonly clerk: ClerkService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const { clerkClient } = this.clerk;
@@ -29,6 +29,8 @@ export class ClerkGuard implements CanActivate {
         url: fullUrl,
         headers: request.headers,
       } as any);
+
+      console.log('isSignedIn', isSignedIn);
 
       if (!isSignedIn) {
         throw new UnauthorizedException('Invalid token');

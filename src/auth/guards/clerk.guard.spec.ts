@@ -1,7 +1,7 @@
 import { ClerkGuard } from './clerk.guard';
 import { UnauthorizedException } from '@nestjs/common';
 import { ExecutionContext } from '@nestjs/common';
-import { Clerk } from './clerk';
+import { ClerkService } from '../services/clerk.service';
 
 describe('ClerkGuard', () => {
   let guard: ClerkGuard;
@@ -37,7 +37,7 @@ describe('ClerkGuard', () => {
       }),
     } as any;
 
-    guard = new ClerkGuard(mockClerk as unknown as Clerk);
+    guard = new ClerkGuard(mockClerk as unknown as ClerkService);
   });
 
   it('should be defined', () => {

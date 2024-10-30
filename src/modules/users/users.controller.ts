@@ -6,10 +6,12 @@ import {
   Patch,
   Param,
   Delete,
+  Req,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { AuthenticatedRequest } from 'src/auth/interfaces/authenticated-request.interface';
 
 // TODO: Add authGuard. These API should be role protected.
 @Controller('users')
@@ -22,7 +24,8 @@ export class UsersController {
   }
 
   @Get()
-  findAll() {
+  findAll(@Req() req: AuthenticatedRequest) {
+    console.log((req as any).auth);
     return this.usersService.findAll();
   }
 

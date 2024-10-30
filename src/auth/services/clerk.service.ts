@@ -2,7 +2,7 @@ import { ClerkClient, createClerkClient } from '@clerk/express';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-export class Clerk {
+export class ClerkService {
   public clerkClient: ClerkClient;
 
   constructor() {
