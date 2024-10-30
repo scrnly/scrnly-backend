@@ -7,6 +7,7 @@ export class Clerk {
 
   constructor() {
     this.validateEnvironmentVariables();
+    //check https://docs.nestjs.com/techniques/configuration
     this.clerkClient = createClerkClient({
       secretKey: process.env.CLERK_SECRET_KEY,
       publishableKey: process.env.CLERK_PUBLISHABLE_KEY,

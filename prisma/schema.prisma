@@ -15,7 +15,7 @@ datasource db {
 }
 
 // prisma/schema.prisma
-model User {
+model users {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   clerkUserId    String   @unique
   email          String
@@ -25,10 +25,10 @@ model User {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  projects       Project[] // One-to-many relationship with Project
+  projects       projects[] // One-to-many relationship with Project
 }
 
-model Project {
+model projects {
   id             String   @id @default(auto()) @map("_id") @db.ObjectId
   userId         String
   imageUrls      ImageUrls
@@ -38,7 +38,7 @@ model Project {
   createdAt      DateTime @default(now())
   updatedAt      DateTime @updatedAt
 
-  user           User     @relation(fields: [userId], references: [id])
+  user           users     @relation(fields: [userId], references: [id])
 
   @@index([userId], map: "userId_index")
 }
