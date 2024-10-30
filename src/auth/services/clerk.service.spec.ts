@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Clerk } from './clerk';
+import { ClerkService } from './clerk.service';
 import { createClerkClient } from '@clerk/express';
 
 // Mock the createClerkClient function
@@ -10,7 +10,7 @@ jest.mock('@clerk/express', () => ({
 }));
 
 describe('Clerk', () => {
-  let provider: Clerk;
+  let provider: ClerkService;
   const originalEnv = process.env;
 
   beforeEach(async () => {
@@ -20,10 +20,10 @@ describe('Clerk', () => {
     process.env.CLERK_JWT_KEY = 'test-jwt-key';
 
     const module: TestingModule = await Test.createTestingModule({
-      providers: [Clerk],
+      providers: [ClerkService],
     }).compile();
 
-    provider = module.get<Clerk>(Clerk);
+    provider = module.get<ClerkService>(ClerkService);
   });
 
   afterEach(() => {
@@ -54,6 +54,6 @@ describe('Clerk', () => {
     delete process.env.CLERK_PUBLISHABLE_KEY;
     delete process.env.CLERK_JWT_KEY;
 
-    expect(() => new Clerk()).toThrow();
+    expect(() => new ClerkService()).toThrow();
   });
 });
